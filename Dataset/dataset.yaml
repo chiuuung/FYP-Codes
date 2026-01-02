@@ -1,0 +1,8 @@
+names:
+- hand
+- cat
+nc: 2
+path: C:\Users\ngtszch\Documents\FYP\hand-pet-interaction-detector\data\roboflow_dataset
+test: images/test
+train: images/train
+val: images/val

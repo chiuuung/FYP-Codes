@@ -1,0 +1,16 @@
+# YOLOv8 Dataset Configuration for Expanded Dataset (v6)
+# Dataset: Relabeled with standardized classes
+# Classes: human (0), cat (1)
+
+path: C:\Users\ngtszch\Documents\FYP\hand-pet-interaction-detector\data\expanded_dataset
+train: train/images
+val: valid/images
+test: test/images
+
+# Number of classes
+nc: 2
+
+# Class names
+names:
+  0: human
+  1: cat
