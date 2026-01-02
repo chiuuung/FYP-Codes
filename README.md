@@ -1,58 +1,79 @@
-# 🎓 FYP - Human-Cat Interaction Detector (Clean Version)
+# FYP - Human-Cat Interaction Detector (Clean Version)
 
 This is the **organized and ready-to-run** version of the project with all essential components clearly labeled.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
-new FYP/
-├── README.md                    # 👈 You are here
-├── AI_Model/                    # 🤖 AI Model & Training
+FYP-Codes/
+├── README.md                    # You are here
+├── AI_Model/                    # AI Model & Training
 │   ├── weights/
-│   │   └── best.pt             # ⭐ Trained YOLOv8s model (77% mAP50)
+│   │   └── best.pt             # Trained YOLOv8s model (77% mAP50)
 │   ├── training_scripts/
 │   │   ├── train_model.py      # Script to train new models
 │   │   └── test_model.py       # Script to test model accuracy
-│   └── requirements.txt         # Python dependencies for AI
+│   ├── requirements.txt         # Python dependencies for AI
+│   └── train result document/   # Training metrics and results
 │
-├── iOS_App/                     # 📱 iOS Application
-│   ├── backend/
-│   │   ├── streaming_backend_server.py  # ⭐ Main server (Mac/Jetson)
-│   │   ├── cleanup_videos.py            # Video storage management
-│   │   └── start_ios_server.sh          # Quick start script
-│   └── xcode_project/
-│       ├── StreamView.swift             # Live stream viewer
-│       ├── ContentView.swift            # Main app view
-│       ├── NetworkManager.swift         # API communication
-│       ├── VideosView.swift             # Video playback
-│       └── HandPetDetectorApp.swift     # App entry point
+├── backend/                     # Backend Server
+│   ├── streaming_backend_server.py         # Main server (ESP32 + webcam)
+│   ├── streaming_backend_server_webcam.py  # Webcam-only version
+│   └── start_ios_server.sh                 # Quick start script
 │
-├── Dataset/                     # 📊 Dataset Configuration
+├── iOS_App/                     # iOS Application
+│   └── PetGuard/                # Xcode project folder
+│       ├── PetGuard/            # App source files
+│       │   ├── StreamView.swift      # Live stream viewer
+│       │   ├── ContentView.swift     # Main app view
+│       │   ├── NetworkManager.swift  # API communication
+│       │   ├── VideosView.swift      # Video playback
+│       │   └── PetGuardApp.swift     # App entry point
+│       └── PetGuard.xcodeproj/  # Xcode project
+│
+├── hardware_part/               # ESP32 Hardware
+│   ├── README.md               # Hardware overview
+│   └── esp32_control/          # ESP32-S3 camera + BLE
+│       ├── esp32s3_camera_stream.ino
+│       ├── COMPLETE_SYSTEM_DOCUMENTATION.md
+│       └── STREAM_OPTIMIZATION_GUIDE.md
+│
+├── Dataset/                     # Dataset Configuration
 │   ├── dataset.yaml            # Original dataset config
 │   └── expanded_data.yaml      # Expanded dataset config (2500+ images)
 │
-└── Documentation/               # 📖 Project Documentation
+├── recorded_videos/             # Auto-recorded videos
+│   └── interaction_*.mp4       # Saved interactions (max 10)
+│
+└── Documentation/               # Project Documentation
     ├── README.md               # Main project overview
+    ├── PROJECT_ARCHITECTURE.md # System architecture
     ├── STREAMING_SETUP.md      # iOS app setup guide
-    └── TRAINING_DOCUMENTATION.md  # Training methodology & results
+    ├── TRAINING_DOCUMENTATION.md    # Training methodology
+    ├── TRAINING_METHODOLOGY.md      # Advanced training details
+    ├── TRAINING_COMMANDS.md         # Training scripts
+    └── THEORETICAL_PRINCIPLES_AND_METHODS.md  # Academic documentation
 ```
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
-### **1️⃣ Start the Backend Server (Mac/Jetson)**
+### 1. Start the Backend Server (Mac/Jetson)
 
 ```bash
-cd "/Users/tszchiung/Desktop/new FYP/iOS_App/backend"
+cd "/Users/tszchiung/Desktop/FYP-Codes/backend"
 
 # Option A: Use the start script
 ./start_ios_server.sh
 
-# Option B: Run directly
+# Option B: Run directly (ESP32 + Mac webcam)
 python3 streaming_backend_server.py
+
+# Option C: Run webcam-only version
+python3 streaming_backend_server_webcam.py
 ```
 
 **What you should see:**
@@ -65,7 +86,7 @@ Server URL: http://YOUR_IP:5001
 Live Stream: http://YOUR_IP:5001/stream/live
 ```
 
-### **2️⃣ Stop the Server**
+### 2. Stop the Server
 
 ```bash
 # Press Ctrl+C in the terminal
@@ -74,7 +95,7 @@ Live Stream: http://YOUR_IP:5001/stream/live
 lsof -ti:5001 | xargs kill -9
 ```
 
-### **3️⃣ Run iOS App**
+### 3. Run iOS App
 
 1. Open Xcode
 2. Create new iOS project (or use existing)
@@ -92,31 +113,31 @@ lsof -ti:5001 | xargs kill -9
 
 ---
 
-## 🎯 Key Features
+## Key Features
 
-### ✅ **Auto-Recording**
+### Auto-Recording
 - Automatically records when **cat AND human** detected together
 - 2-second cooldown between recordings
 - Videos saved as: `interaction_YYYYMMDD_HHMMSS.mp4`
 
-### ✅ **Auto-Storage Management**
+### Auto-Storage Management
 - Keeps only **10 newest videos** automatically
 - Older videos deleted after each recording
 - Manual cleanup: `python3 cleanup_videos.py`
 
-### ✅ **Live Streaming**
+### Live Streaming
 - Real-time webcam feed to iOS devices
 - Shows detection confidence levels
 - Recording indicator when active
 
-### ✅ **iOS Viewer App**
+### iOS Viewer App
 - **Live Stream** tab: Watch real-time feed
 - **Recordings** tab: Browse and play saved videos
 - No iPhone camera needed (viewer only)
 
 ---
 
-## 📊 Model Performance
+## Model Performance
 
 - **Model**: YOLOv8s
 - **Dataset**: 2500+ annotated images
@@ -128,17 +149,19 @@ lsof -ti:5001 | xargs kill -9
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### **Backend Server Settings**
-Edit `iOS_App/backend/streaming_backend_server.py`:
+Edit `backend/streaming_backend_server.py`:
 
 ```python
-# Line 21-25
-MODEL_PATH = "../AI_Model/weights/best.pt"  # Update path to model
-CAMERA_ID = 0                                # Change for external camera
+# Line 28-51 (Configuration section)
+MODEL_PATH = PROJECT_ROOT / "AI_Model" / "weights" / "best.pt"
+VIDEOS_DIR = PROJECT_ROOT / "recorded_videos"
+use_esp32_camera = True                      # True for ESP32, False for Mac webcam
 CONFIDENCE_THRESHOLD = 0.25                  # Detection sensitivity
 COOLDOWN_SECONDS = 2                         # Recording timeout
+CAMERA_ID = 0                                # Webcam ID (if not using ESP32)
 MAX_VIDEOS = 10                              # Max stored videos
 ```
 
@@ -149,7 +172,7 @@ In the app's Settings tab:
 
 ---
 
-## 📖 Documentation Files
+## Documentation Files
 
 | File | Purpose |
 |------|---------|
@@ -159,7 +182,7 @@ In the app's Settings tab:
 
 ---
 
-## 🛠️ Requirements
+## Requirements
 
 ### **For Backend (Mac/Jetson)**
 ```bash
@@ -180,7 +203,7 @@ pip3 install -r requirements.txt
 
 ---
 
-## 🎬 Workflow
+## Workflow
 
 ```
 1. Start Backend Server
@@ -198,7 +221,7 @@ pip3 install -r requirements.txt
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### **Server won't start**
 ```bash
@@ -236,7 +259,7 @@ python3 -c "import cv2; cap = cv2.VideoCapture(0); print('OK' if cap.isOpened() 
 
 ---
 
-## 📝 Training New Models
+## Training New Models
 
 See `Documentation/TRAINING_DOCUMENTATION.md` for details.
 
@@ -253,17 +276,17 @@ python3 train_model.py \
 
 ---
 
-## ✅ Project Status
+## Project Status
 
-- ✅ **AI Model**: Trained and tested (77% mAP50)
-- ✅ **Backend Server**: Streaming + Auto-recording working
-- ✅ **iOS App**: Live viewer + Video playback complete
-- ✅ **Storage**: Auto-cleanup implemented
-- ⏳ **Jetson Nano**: Deployment pending
+- AI Model: Trained and tested (77% mAP50)
+- Backend Server: Streaming + Auto-recording working
+- iOS App: Live viewer + Video playback complete
+- Storage: Auto-cleanup implemented
+- Jetson Nano: Deployment pending
 
 ---
 
-## 📞 Support
+## Support
 
 For detailed setup instructions, refer to:
 - `Documentation/STREAMING_SETUP.md` - iOS app setup
@@ -272,7 +295,7 @@ For detailed setup instructions, refer to:
 
 ---
 
-## 🎓 Project Info
+## Project Info
 
 **Title**: Human-Cat Interaction Detector with iOS Monitoring  
 **Technology**: YOLOv8, Python, Swift, Flask, OpenCV  

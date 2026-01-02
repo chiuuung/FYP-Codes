@@ -2,7 +2,9 @@
 # Dataset: Relabeled with standardized classes
 # Classes: human (0), cat (1)
 
-path: C:\Users\ngtszch\Documents\FYP\hand-pet-interaction-detector\data\expanded_dataset
+# NOTE: Update this path to match your system
+# For training, you need the actual expanded_dataset folder with images/labels
+path: /Users/tszchiung/Desktop/FYP-Codes/Dataset/expanded_dataset
 train: train/images
 val: valid/images
 test: test/images

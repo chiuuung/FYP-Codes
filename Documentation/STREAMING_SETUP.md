@@ -1,6 +1,6 @@
-# 📱 NEW Architecture - Streaming Setup
+# NEW Architecture - Streaming Setup
 
-## 🎯 How It Works Now
+## How It Works Now
 
 **Mac/Jetson Side:**
 - Webcam captures video
@@ -16,18 +16,21 @@
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Step 1: Start Streaming Server on Mac
 
 ```bash
-cd /path/to/hand-pet-interaction-detector
+cd /Users/tszchiung/Desktop/FYP-Codes/backend
 
 # Stop old server if running
 lsof -ti:5001 | xargs kill -9
 
-# Start streaming server
-python3 ios_app/streaming_backend_server.py
+# Start streaming server (ESP32 + webcam support)
+python3 streaming_backend_server.py
+
+# OR start webcam-only version
+python3 streaming_backend_server_webcam.py
 ```
 
 **You should see:**
@@ -42,23 +45,26 @@ Live Stream: http://10.17.94.27:5001/stream/live
 
 ### Step 2: Update iOS App in Xcode
 
-**Files to update in your Xcode project:**
+**Files location in your Xcode project:**
 
-1. **Replace `ContentView.swift`**
-   - Copy from: `ios_app/ContentView.swift`
-   - Changes: Uses `StreamView` instead of `CameraView`
+1. **NetworkManager.swift** - Backend communication
+   - Location: `iOS_App/PetGuard/PetGuard/NetworkManager.swift`
+   - Update: `baseURL` on line 19
 
-2. **Add `StreamView.swift`** (NEW FILE)
-   - Copy from: `ios_app/StreamView.swift`
-   - This displays the video stream from Mac/Jetson
+2. **ContentView.swift** - Main UI
+   - Location: `iOS_App/PetGuard/PetGuard/ContentView.swift`
+   - Uses StreamView for live feed
 
-3. **Update `NetworkManager.swift`**
-   - Copy from: `ios_app/NetworkManager.swift`
-   - Added `fetchLiveFrame()` method for streaming
+3. **StreamView.swift** - Live camera view
+   - Location: `iOS_App/PetGuard/PetGuard/StreamView.swift`
+   - Displays video stream from Mac/ESP32
 
-4. **Keep `VideosView.swift`** (no changes)
+4. **VideosView.swift** - Saved videos view
+   - Location: `iOS_App/PetGuard/PetGuard/VideosView.swift`
+   - No changes needed
 
-5. **Can DELETE `CameraView.swift`** (not needed anymore!)
+5. **PetGuardApp.swift** - App entry point
+   - Location: `iOS_App/PetGuard/PetGuard/PetGuardApp.swift`
 
 ### Step 3: Update Info.plist
 
@@ -85,7 +91,7 @@ Live Stream: http://10.17.94.27:5001/stream/live
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Test 1: Server Webcam
 On Mac, check if webcam is working:
@@ -109,7 +115,7 @@ curl http://localhost:5001/stream/live | jq '.detections'
 
 ---
 
-## 📋 File Structure
+## File Structure
 
 ```
 ios_app/
@@ -125,7 +131,7 @@ ios_app/
 
 ---
 
-## 🎬 Demo Flow
+## Demo Flow
 
 1. **Start Server**: Mac/Jetson runs with webcam
 2. **Open iOS App**: Connect to server
@@ -135,11 +141,12 @@ ios_app/
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Change Camera (for Jetson)
-In `streaming_backend_server.py`, line 31:
+In `backend/streaming_backend_server.py`, line 49:
 ```python
+use_esp32_camera = False  # Set to False for Mac webcam
 CAMERA_ID = 0  # Change to 1 or 2 for external camera
 ```
 
@@ -170,21 +177,21 @@ recorded_videos/interaction_YYYYMMDD_HHMMSS.mp4
 
 ---
 
-## ✅ Advantages of New Architecture
+## Advantages of New Architecture
 
-- ✅ No iPhone camera needed
-- ✅ Better for Jetson Nano deployment
-- ✅ iPhone is just a remote viewer
-- ✅ Can add multiple viewer devices
-- ✅ All processing on Mac/Jetson
-- ✅ **Auto-storage management** (max 10 videos)
-- ✅ Cleaner separation of concerns
-- ✅ Easier to deploy and scale
-- ✅ Network-based streaming architecture
+- No iPhone camera needed
+- Better for Jetson Nano deployment
+- iPhone is just a remote viewer
+- Can add multiple viewer devices
+- All processing on Mac/Jetson
+- Auto-storage management (max 10 videos)
+- Cleaner separation of concerns
+- Easier to deploy and scale
+- Network-based streaming architecture
 
 ---
 
-## 🚀 Ready to Test!
+## Ready to Test!
 
 1. Start server: `python3 ios_app/streaming_backend_server.py`
 2. Update Xcode project files

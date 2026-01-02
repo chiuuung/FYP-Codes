@@ -2,7 +2,7 @@
 
 An AI-powered system to detect humans and cats using computer vision, with iOS app for remote monitoring. Designed for deployment on **Mac** and **NVIDIA Jetson Nano**.
 
-## 🎯 Project Overview
+## Project Overview
 
 This system uses deep learning (YOLOv8) to:
 - Detect **humans** and **cats** in real-time via webcam
@@ -11,24 +11,28 @@ This system uses deep learning (YOLOv8) to:
 - Automatically manage storage (keeps 10 newest recordings)
 - Achieve **77.0% mAP50** on expanded dataset (2500+ images)
 
-### Current Status: ✅ Phase 2 Complete
-- ✅ 2-class object detection (human: 63.7%, cat: 90.4% mAP50)
-- ✅ Trained model: YOLOv8s on 2500+ images
-- ✅ **iOS App**: Remote viewer with video playback
-- ✅ **Auto-recording**: Detects cat+human interactions
-- ✅ **Storage management**: Auto-cleanup (max 10 videos)
-- ✅ **Streaming server**: Mac/Jetson webcam → iOS viewer
-- ⏳ Jetson Nano deployment (next phase)
+### Current Status: Fully Functional System
+- 2-class object detection (human: 63.7%, cat: 90.4% mAP50)
+- Trained model: YOLOv8s on 2500+ images (77% mAP50)
+- iOS App (PetGuard): Remote viewer with video playback
+- Auto-recording: Detects cat+human interactions
+- Storage management: Auto-cleanup (max 10 videos)
+- ESP32-S3 Camera: Streaming to backend via WiFi
+- BLE Proximity: Distance-based alerts and recording
+- Streaming server: Mac backend with dual camera support
+- Jetson Nano deployment (future enhancement)
 
-## 🛠️ Hardware Requirements
+## Hardware Requirements
 
-- **NVIDIA Jetson Nano** (2GB or 4GB model)
+- **NVIDIA Jetson Nano** (2GB or 4GB model) - Optional, for deployment
 - **USB Camera** or CSI Camera module
-- **Power supply** (5V 4A recommended)
-- **MicroSD card** (64GB+ recommended)
-- Optional: External cooling fan
+- **Power supply** (5V 4A recommended for Jetson)
+- **MicroSD card** (64GB+ recommended for Jetson)
+- **Mac Computer** (for development and backend server)
+- **iPhone/iPad** (iOS 15+ for PetGuard app)
+- Optional: External cooling fan for Jetson
 
-## 📋 Software Requirements
+## Software Requirements
 
 ### Current Development Environment
 - **Python:** 3.14.0
@@ -42,9 +46,9 @@ This system uses deep learning (YOLOv8) to:
 - Python 3.6+
 - TensorRT optimization recommended
 
-## 🚀 Quick Start
+## Quick Start
 
-### ✅ Current Status: Streaming System Ready
+### Current Status: Streaming System Ready
 
 **Trained Model Location:**  
 `runs/best_accuracy/yolov8s_massive/weights/best.pt`
@@ -55,12 +59,12 @@ This system uses deep learning (YOLOv8) to:
 - Human Detection: 63.7% mAP50
 - Model: YOLOv8s
 
-### 🎥 Run the Streaming System
+### Run the Streaming System
 
 **1. Start Backend Server (Mac/Jetson):**
 ```bash
-cd /path/to/hand-pet-interaction-detector
-python3 ios_app/streaming_backend_server.py
+cd /Users/tszchiung/Desktop/FYP-Codes/backend
+python3 streaming_backend_server.py
 ```
 
 **2. Stop Server:**
@@ -70,12 +74,12 @@ lsof -ti:5001 | xargs kill -9
 ```
 
 **3. Run iOS App:**
-- Open `ios_app/HandPetInteraction.xcodeproj` in Xcode
-- Update server URL in Settings: `http://YOUR_MAC_IP:5001`
+- Open `iOS_App/PetGuard/PetGuard.xcodeproj` in Xcode
+- Update server URL in NetworkManager.swift: `http://YOUR_MAC_IP:5001`
 - Run on iPhone/iPad
 - View live stream and recorded videos
 
-### 📖 Documentation Quick Links
+### Documentation Quick Links
 
 | Document | Purpose |
 |----------|---------|  
@@ -84,7 +88,7 @@ lsof -ti:5001 | xargs kill -9
 | **[QUICK_TEST_GUIDE.md](QUICK_TEST_GUIDE.md)** | Test with webcam, images, or video |
 | **[TERMINAL_RECORD.md](TERMINAL_RECORD.md)** | All commands used (reproducibility) |
 | **[DATA_COLLECTION_GUIDE.md](DATA_COLLECTION_GUIDE.md)** | How data was collected & labeled |
-| **[JETSON_SETUP.md](JETSON_SETUP.md)** | Deploy to Jetson Nano (future) |### 🧪 Test the Model Now
+| **[JETSON_SETUP.md](JETSON_SETUP.md)** | Deploy to Jetson Nano (future) |### Test the Model Now
 
 **1. Test with Webcam:**
 ```powershell
@@ -103,7 +107,7 @@ lsof -ti:5001 | xargs kill -9
 
 See **[QUICK_TEST_GUIDE.md](QUICK_TEST_GUIDE.md)** for more testing options.
 
-### 🎓 Want to Train Your Own Model?
+### Want to Train Your Own Model?
 
 See **[DATA_COLLECTION_GUIDE.md](DATA_COLLECTION_GUIDE.md)** for:
 - How to collect cat images
@@ -115,7 +119,7 @@ See **[DATA_COLLECTION_GUIDE.md](DATA_COLLECTION_GUIDE.md)** for:
 & "C:\Users\ngtszch\AppData\Local\Programs\Python\Python314\python.exe" "train_model.py" --data-dir "data\yolo_dataset" --epochs 50 --batch-size 4 --device cpu
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 hand-pet-interaction-detector/
@@ -140,7 +144,7 @@ hand-pet-interaction-detector/
     └── expanded_dataset/          # 2500+ annotated images
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 Edit `config/config.json` to customize:
 
@@ -165,7 +169,7 @@ Edit `config/config.json` to customize:
 - **velocity_hitting_threshold**: Human velocity threshold in px/s (default: 100)
 - **confidence_threshold**: Minimum detection confidence (default: 0.5)
 
-## 🎥 Camera Setup
+## Camera Setup
 
 ### USB Camera
 ```bash
@@ -182,7 +186,7 @@ python3 -c "import cv2; cap = cv2.VideoCapture(0); print(cap.isOpened())"
 # Modify camera initialization to use CSI camera
 ```
 
-## 🔧 Optimization for Jetson Nano
+## Optimization for Jetson Nano
 
 ### 1. Use FP16 Precision
 The training script includes automatic FP16 optimization:
@@ -212,14 +216,14 @@ In `config/config.json`:
 # See Jetson optimization guides
 ```
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 Expected performance on Jetson Nano:
 - **YOLOv5n**: ~15-20 FPS (416x416)
 - **YOLOv8n**: ~12-18 FPS (416x416)
 - **YOLOv5s**: ~8-12 FPS (640x640)
 
-## 📱 iOS App Features
+## iOS App Features
 
 ### Live Streaming
 - **Real-time view**: See Mac/Jetson webcam feed on iPhone/iPad
@@ -244,7 +248,7 @@ Expected performance on Jetson Nano:
 - **Connection test**: Verify server connectivity
 - **Port**: 5001 (configurable in server)
 
-## 📝 Training Tips
+## Training Tips
 
 1. **Collect diverse data**: Different lighting, angles, pets, people
 2. **Balance classes**: Equal samples of touching, hitting, no-interaction
@@ -256,7 +260,7 @@ Expected performance on Jetson Nano:
 tensorboard --logdir runs/train
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Camera not detected
 ```bash
@@ -283,14 +287,14 @@ python3 main.py --camera 1
 - Use swap space
 - Close other applications
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [YOLOv5 Documentation](https://github.com/ultralytics/yolov5)
 - [YOLOv8 Documentation](https://docs.ultralytics.com/)
 - [Jetson Nano Guide](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
 - [NVIDIA JetPack](https://developer.nvidia.com/embedded/jetpack)
 
-## 🤝 Contributing
+## Contributing
 
 This is a FYP project. Suggestions and improvements are welcome!
 
@@ -310,7 +314,7 @@ FYP Project - Human-Pet Interaction Detection System
 
 ---
 
-## 📞 Support
+## Support
 
 For issues or questions about this project, please create an issue in the repository or contact the project maintainer.
 

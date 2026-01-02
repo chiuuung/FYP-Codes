@@ -206,11 +206,11 @@ The model was trained for **150 epochs** with early stopping patience of 30 epoc
 
 | Technique | Applied? | Implementation | Impact |
 |-----------|----------|----------------|--------|
-| **1. Early Stopping (Overfitting Prevention)** | ✅ Yes | Patience: 30 epochs | Prevents overfitting by stopping when validation performance plateaus |
-| **2. Data Augmentation (Dataset Expansion)** | ✅ Yes | Horizontal flip (50%), rotation, scaling, mosaic, RandAugment, erasing | Artificially expands dataset 10-20x, improves generalization |
-| **3. Data Shuffling** | ✅ Yes | Automatic shuffling before and between epochs | Eliminates order-based biases |
-| **4. Network Architecture (Conv Layers)** | ⚠️ Optimized | YOLOv8s pretrained architecture with optimal depth | Pre-optimized network, no manual layer addition needed |
-| **5. Learning Rate Decay** | ✅ Yes | Linear decay (0.001→0.00001) + 3-epoch warmup + Adam optimizer | Stable training with gradual convergence |
+| **1. Early Stopping (Overfitting Prevention)** | Yes | Patience: 30 epochs | Prevents overfitting by stopping when validation performance plateaus |
+| **2. Data Augmentation (Dataset Expansion)** | Yes | Horizontal flip (50%), rotation, scaling, mosaic, RandAugment, erasing | Artificially expands dataset 10-20x, improves generalization |
+| **3. Data Shuffling** | Yes | Automatic shuffling before and between epochs | Eliminates order-based biases |
+| **4. Network Architecture (Conv Layers)** | Optimized | YOLOv8s pretrained architecture with optimal depth | Pre-optimized network, no manual layer addition needed |
+| **5. Learning Rate Decay** | Yes | Linear decay (0.001→0.00001) + 3-epoch warmup + Adam optimizer | Stable training with gradual convergence |
 
 ### Additional Advanced Techniques
 - **Transfer Learning**: Pretrained weights initialization

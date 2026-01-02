@@ -40,10 +40,10 @@ python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 **Basic Training:**
 ```bash
 # Navigate to project directory
-cd /Users/tszchiung/Desktop/FYP.ZIP/FYP/hand-pet-interaction-detector
+cd /Users/tszchiung/Desktop/FYP-Codes
 
 # Start training with YOLOv8s
-python -c "from ultralytics import YOLO; model = YOLO('yolov8s.pt'); model.train(data='data/expanded_dataset/data.yaml', epochs=150, batch=8, imgsz=640, device='cpu', project='runs/best_accuracy', name='yolov8s_massive')"
+python -c "from ultralytics import YOLO; model = YOLO('yolov8s.pt'); model.train(data='Dataset/expanded_data.yaml', epochs=150, batch=8, imgsz=640, device='cpu', project='AI_Model/runs/best_accuracy', name='yolov8s_massive')"
 ```
 
 **Training with All Hyperparameters (Exact Configuration Used):**
@@ -78,17 +78,17 @@ model.train(\
 **Run the existing training script:**
 ```bash
 # Navigate to project directory
-cd /Users/tszchiung/Desktop/FYP.ZIP/FYP/hand-pet-interaction-detector
+cd /Users/tszchiung/Desktop/FYP-Codes/AI_Model/training_scripts
 
 # Run training script with arguments
 python train_model.py \
-    --data-dir data/expanded_dataset \
+    --data-dir ../../Dataset \
     --epochs 150 \
     --batch-size 8 \
     --img-size 640 \
     --model yolov8s \
     --device cpu \
-    --project runs/best_accuracy \
+    --project ../runs/best_accuracy \
     --name yolov8s_massive
 ```
 

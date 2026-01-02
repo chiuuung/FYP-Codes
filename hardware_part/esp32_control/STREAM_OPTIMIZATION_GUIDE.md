@@ -1,6 +1,6 @@
 # Stream Performance Optimization Guide
 
-## 🐛 Current Issue: Stream Freezing/Lagging
+## Current Issue: Stream Freezing/Lagging
 
 ### Symptoms
 - Image freezes for 1-2 seconds
@@ -15,7 +15,7 @@
 
 ---
 
-## ✅ Quick Fixes (Apply These First)
+## Quick Fixes (Apply These First)
 
 ### Fix 1: Add Frame Buffering (Backend)
 This prevents queue overflow and ensures smooth delivery.
@@ -75,7 +75,7 @@ To:
 
 ---
 
-## 🚀 Advanced Optimizations
+## Advanced Optimizations
 
 ### Optimization 1: Use Smaller YOLOv8 Model
 
@@ -126,7 +126,7 @@ while self.running:
 
 ---
 
-## 📊 Expected Improvements
+## Expected Improvements
 
 | Optimization | Latency Reduction | Complexity |
 |-------------|------------------|------------|
@@ -141,7 +141,7 @@ while self.running:
 
 ---
 
-## 🧪 Testing Procedure
+## Testing Procedure
 
 1. **Apply Fix 1** (maxsize=1)
 2. Restart backend server
@@ -157,7 +157,7 @@ while self.running:
 
 ---
 
-## 📝 Monitoring Commands
+## Monitoring Commands
 
 Check backend performance:
 ```bash
@@ -174,7 +174,7 @@ ping 172.20.10.3  # Mac
 
 ---
 
-## 🎯 Target Performance
+## Target Performance
 
 **Before optimization**:
 - End-to-end latency: 500-1000ms

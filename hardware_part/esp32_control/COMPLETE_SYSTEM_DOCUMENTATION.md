@@ -1,6 +1,6 @@
 # Hand-Pet Interaction Detection System - Complete Documentation
 
-## 📋 System Overview
+## System Overview
 
 This system uses **ESP32-S3 camera** → **Mac backend (YOLOv8)** → **iOS app** architecture to detect and record interactions between humans and cats.
 
@@ -21,7 +21,7 @@ This system uses **ESP32-S3 camera** → **Mac backend (YOLOv8)** → **iOS app*
 
 ---
 
-## 🔧 Component 1: ESP32-S3 Camera Module
+## Component 1: ESP32-S3 Camera Module
 
 ### Hardware Specifications
 - **Board**: ESP32-S3-N16R8
@@ -153,7 +153,7 @@ Tools Settings:
 
 ---
 
-## 🖥️ Component 2: Mac Backend Server (YOLOv8)
+## Component 2: Mac Backend Server (YOLOv8)
 
 ### System Requirements
 - **OS**: macOS (tested on macOS Ventura+)
@@ -329,7 +329,7 @@ python3 streaming_backend_server.py
 
 ---
 
-## 📱 Component 3: iOS App
+## Component 3: iOS App
 
 ### System Requirements
 - **iOS**: 15.0+
@@ -466,7 +466,7 @@ Timer.publish(every: 0.2, on: .main, in: .common)
 
 ---
 
-## 🌐 Network Architecture
+## Network Architecture
 
 ### Complete Network Map
 ```
@@ -506,7 +506,7 @@ Timer.publish(every: 0.2, on: .main, in: .common)
 
 ---
 
-## 🚀 Complete Setup Guide
+## Complete Setup Guide
 
 ### Step 1: Prepare Hardware
 1. ✅ ESP32-S3-N16R8 board
@@ -556,7 +556,7 @@ Timer.publish(every: 0.2, on: .main, in: .common)
 
 ---
 
-## 🐛 Common Issues & Solutions
+## Common Issues & Solutions
 
 ### Issue: Laggy/Frozen Stream
 
@@ -622,7 +622,7 @@ Timer.publish(every: 0.2, on: .main, in: .common)
 
 ---
 
-## 📊 Performance Benchmarks
+## Performance Benchmarks
 
 ### Tested Configuration
 - **ESP32**: 15 FPS, 640x480, JPEG quality 20
@@ -648,7 +648,7 @@ Timer.publish(every: 0.2, on: .main, in: .common)
 
 ---
 
-## 🔧 Advanced Optimizations
+## Advanced Optimizations
 
 ### 1. Reduce Latency
 
@@ -702,7 +702,7 @@ int quality = both_detected ? 15 : 25;
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 ### YOLOv8 Training Documentation
 - `chiu/TRAINING_METHODOLOGY.md` - Training techniques explained
@@ -719,13 +719,13 @@ int quality = both_detected ? 15 : 25;
 
 ---
 
-## 🎯 Future Improvements
+## Future Improvements
 
 ### Short-term
-1. ✅ Fix stream freezing issues (DONE)
-2. ⬜ Add BLE beacon distance monitoring
-3. ⬜ Implement video playback controls in iOS
-4. ⬜ Add detection confidence filtering in app
+1. Fix stream freezing issues (DONE)
+2. Add BLE beacon distance monitoring
+3. Implement video playback controls in iOS
+4. Add detection confidence filtering in app
 
 ### Medium-term
 1. ⬜ Use websockets for real-time streaming

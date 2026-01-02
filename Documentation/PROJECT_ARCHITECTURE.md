@@ -1,4 +1,4 @@
-# 🏗️ Project Architecture Flow
+# Project Architecture Flow
 
 ## System Overview
 
@@ -8,7 +8,7 @@ A comprehensive system that combines AI-based detection, real-time video streami
 
 ---
 
-## 📊 Main System Components
+## Main System Components
 
 ### 1. **Hardware Layer** (3 Main Parts)
 
@@ -51,6 +51,7 @@ A comprehensive system that combines AI-based detection, real-time video streami
 ### 2. **Backend Server** (Mac/Jetson Computer)
 
 - **Technology**: Python Flask Server (Port 5001)
+- **Location**: `backend/streaming_backend_server.py`
 - **AI Model**: YOLOv8s (trained for human & cat detection)
 - **Functions**:
   1. **Video Processing**:
@@ -80,6 +81,8 @@ A comprehensive system that combines AI-based detection, real-time video streami
 ### 3. **iOS App** (iPhone/iPad)
 
 - **Technology**: Swift/SwiftUI
+- **App Name**: PetGuard
+- **Location**: `iOS_App/PetGuard/`
 - **Functions**:
   1. **Live Video Stream**:
      - Displays real-time camera feed with AI detections
@@ -104,7 +107,7 @@ A comprehensive system that combines AI-based detection, real-time video streami
 
 ---
 
-## 🔄 Complete System Flow Diagram
+## Complete System Flow Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -202,7 +205,7 @@ NETWORK: Private Wi-Fi (all devices same SSID)
 
 ---
 
-## 🔄 Detailed Data Flow
+## Detailed Data Flow
 
 ### Flow 1: Video Stream & AI Detection
 ```
@@ -259,7 +262,7 @@ NETWORK: Private Wi-Fi (all devices same SSID)
 
 ---
 
-## 🔌 Communication Protocols
+## Communication Protocols
 
 ### ESP32-S3 ↔ Mac Backend
 - **Protocol**: HTTP/WebSocket (WiFi)
@@ -290,27 +293,27 @@ NETWORK: Private Wi-Fi (all devices same SSID)
 
 ---
 
-## 📋 Key Features
+## Key Features
 
-### ✅ AI Detection
+### AI Detection
 - Real-time human & cat detection
 - Auto-recording when both present
 - Confidence scoring
 - Bounding box visualization
 
-### ✅ BLE Proximity Monitoring
+### BLE Proximity Monitoring
 - Distance calculation from RSSI
 - Configurable thresholds (iOS app)
 - Real-time alerts ("Too close!")
 - Multi-beacon support (future)
 
-### ✅ Remote Motor Control
+### Remote Motor Control
 - Button-triggered commands
 - WiFi-based control
 - Real-time execution
 - Status feedback
 
-### ✅ Video Management
+### Video Management
 - Auto-recording interactions
 - Storage limit (10 videos)
 - Auto-cleanup old files
@@ -318,20 +321,20 @@ NETWORK: Private Wi-Fi (all devices same SSID)
 
 ---
 
-## 🎯 Current Implementation Status
+## Current Implementation Status
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| ESP32-S3 + OV5640 | ⚠️ In Development | Camera streaming works, BLE integration pending |
-| ESP32-CAM Motor | ⚠️ In Development | Motor control code ready, WiFi integration needed |
-| BLE Beacon | 🧪 Testing | Using 1 beacon, will expand to 2+ |
-| Mac Backend Server | ✅ Complete | Flask server operational |
-| YOLOv8 AI Model | ✅ Complete | 77% mAP50 accuracy |
-| iOS App | ⚠️ In Development | Live view works, BLE UI pending |
+| ESP32-S3 + OV5640 | Complete | Camera streaming + BLE scanning working |
+| ESP32-CAM Motor | Not Implemented | Motor control moved to separate project |
+| BLE Beacon | Complete | Single beacon proximity detection active |
+| Mac Backend Server | Complete | Flask server operational with dual camera support |
+| YOLOv8 AI Model | Complete | 77% mAP50 accuracy, ESP32 + webcam modes |
+| iOS App (PetGuard) | Complete | Live view, videos, proximity alerts working |
 
 ---
 
-## 🔧 Technical Specifications
+## Technical Specifications
 
 ### Hardware Requirements
 - **ESP32-S3**: WiFi + BLE capable
@@ -354,7 +357,7 @@ NETWORK: Private Wi-Fi (all devices same SSID)
 
 ---
 
-## 🚀 Future Enhancements
+## Future Enhancements
 
 1. **Multi-Beacon Positioning**
    - Add 2+ beacons for triangulation
@@ -378,7 +381,7 @@ NETWORK: Private Wi-Fi (all devices same SSID)
 
 ---
 
-## 📞 System Integration Points
+## System Integration Points
 
 ### Critical Integration Tasks Remaining
 
