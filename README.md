@@ -1,4 +1,4 @@
-# FYP - Human-Cat Interaction Detector (Clean Version)
+# FYP - Human-Cat Interaction Detector
 
 This is the **organized and ready-to-run** version of the project with all essential components clearly labeled.
 
