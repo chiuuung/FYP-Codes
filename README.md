@@ -20,7 +20,6 @@ FYP-Codes/
 │
 ├── backend/                     # Backend Server
 │   ├── streaming_backend_server.py         # Main server (ESP32 + webcam)
-│   ├── streaming_backend_server_webcam.py  # Webcam-only version
 │   └── start_ios_server.sh                 # Quick start script
 │
 ├── iOS_App/                     # iOS Application
@@ -34,7 +33,6 @@ FYP-Codes/
 │       └── PetGuard.xcodeproj/  # Xcode project
 │
 ├── hardware_part/               # ESP32 Hardware
-│   ├── README.md               # Hardware overview
 │   └── esp32_control/          # ESP32-S3 camera + BLE
 │       ├── esp32s3_camera_stream.ino
 │       ├── COMPLETE_SYSTEM_DOCUMENTATION.md
@@ -51,9 +49,7 @@ FYP-Codes/
     ├── README.md               # Main project overview
     ├── PROJECT_ARCHITECTURE.md # System architecture
     ├── STREAMING_SETUP.md      # iOS app setup guide
-    ├── TRAINING_DOCUMENTATION.md    # Training methodology
-    ├── TRAINING_METHODOLOGY.md      # Advanced training details
-    ├── TRAINING_COMMANDS.md         # Training scripts
+    ├── TRAINING_DOCUMENTATION.md    # Complete training guide
     └── THEORETICAL_PRINCIPLES_AND_METHODS.md  # Academic documentation
 ```
 
