@@ -306,13 +306,27 @@ void sendDistanceToMac() {
   http.addHeader("Content-Type", "application/json");
   http.setTimeout(2000);
   
-  // Calculate simple distance
-  float distance = (beaconRSSI >= RSSI_THRESHOLD_1M) ? 0.5 : 1.5;
+  // Calculate accurate distance using Path Loss formula
+  // d = 10^((RSSI_measured - RSSI_at_1m) / (10 * n))
+  // Where:
+  // - RSSI_at_1m = Measured power at 1 meter (calibration value)
+  // - n = Path loss exponent (2.0 for free space, 2-4 for indoor)
+  
+  const int RSSI_AT_1M = -59;  // Calibrated RSSI at 1 meter (adjust based on your beacon)
+  const float PATH_LOSS_EXPONENT = 2.5;  // Indoor environment (2.0-4.0)
+  
+  float distance = pow(10.0, (RSSI_AT_1M - beaconRSSI) / (10.0 * PATH_LOSS_EXPONENT));
+  
+  // Clamp distance to reasonable range (0.1m to 10m)
+  if (distance < 0.1) distance = 0.1;
+  if (distance > 10.0) distance = 10.0;
   
   String json = "{";
   json += "\"rssi\":" + String(beaconRSSI) + ",";
   json += "\"distance\":" + String(distance, 2) + ",";
-  json += "\"beacon_mac\":\"" + String(TARGET_BEACON_MAC) + "\"";
+  json += "\"beacon_mac\":\"" + String(TARGET_BEACON_MAC) + "\",";
+  json += "\"rssi_at_1m\":" + String(RSSI_AT_1M) + ",";
+  json += "\"path_loss_exponent\":" + String(PATH_LOSS_EXPONENT, 1);
   json += "}";
   
   int httpCode = http.POST(json);

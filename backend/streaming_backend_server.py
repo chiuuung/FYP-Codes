@@ -59,6 +59,8 @@ proximity_state = {
     "is_close": False,
     "last_update": time.time(),
     "beacon_mac": None,
+    "rssi_at_1m": -59,
+    "path_loss_exponent": 2.5,
     "proximity_recording": False,
     "proximity_alert_active": False
 }
@@ -418,16 +420,20 @@ def receive_distance_data():
         distance = float(data.get('distance', 999.0))
         rssi = int(data.get('rssi', -100))
         beacon_mac = data.get('beacon_mac', 'unknown')
+        rssi_at_1m = int(data.get('rssi_at_1m', -59))
+        path_loss_exponent = float(data.get('path_loss_exponent', 2.5))
         
         # Update proximity state
         proximity_state['distance'] = distance
         proximity_state['rssi'] = rssi
         proximity_state['beacon_mac'] = beacon_mac
+        proximity_state['rssi_at_1m'] = rssi_at_1m
+        proximity_state['path_loss_exponent'] = path_loss_exponent
         proximity_state['last_update'] = time.time()
         
-        # Check if beacon is close (<=1m) - using RSSI threshold is more reliable
+        # Check if beacon is close (<=1m) - use calculated distance
         was_close = proximity_state['is_close']
-        is_now_close = (distance <= 1.0) or (rssi >= -70)  # Use RSSI threshold or distance
+        is_now_close = (distance <= 1.0)
         proximity_state['is_close'] = is_now_close
         
         print(f"📏 RSSI: {rssi} dBm, Distance: {distance:.2f}m, Close: {is_now_close}, Alert: {proximity_state['proximity_alert_active']}, Recording: {proximity_state['proximity_recording']}")
@@ -465,6 +471,9 @@ def receive_distance_data():
             "is_close": is_now_close,
             "alert_active": proximity_state['proximity_alert_active'],
             "recording": proximity_state['proximity_recording'],
+            "calculation_method": "path_loss_formula",
+            "rssi_at_1m": rssi_at_1m,
+            "path_loss_exponent": path_loss_exponent,
             "timestamp": datetime.now().isoformat()
         })
         
@@ -536,6 +545,9 @@ def get_proximity_status():
         "alert_active": proximity_state["proximity_alert_active"],
         "recording": proximity_state["proximity_recording"],
         "beacon_mac": proximity_state["beacon_mac"],
+        "rssi_at_1m": proximity_state.get("rssi_at_1m", -59),
+        "path_loss_exponent": proximity_state.get("path_loss_exponent", 2.5),
+        "calculation_method": "path_loss_formula",
         "last_update": proximity_state["last_update"],
         "time_since_update": time_since_update,
         "has_frame": recording_state["latest_frame"] is not None,
